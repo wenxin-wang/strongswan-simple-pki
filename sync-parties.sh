@@ -42,8 +42,10 @@ sync_conf() {
     caDir=$dir/$caname
     caCert=$caDir/ca/$caname-cert.pem
     partDir=$caDir/$name
-    partKey=$partDir/$id-key.pem
-    partCert=$partDir/$id-cert.pem
+    partKeyName=$caname-$id-key.pem
+    partCertName=$caname-$id-cert.pem
+    partKey=$partDir/$partKeyName
+    partCert=$partDir/$partCertName
     partP12=$partDir/$id-cert.p12
 
     if [ z"$swanctl_dir" == zpkcs12 ]; then
@@ -59,8 +61,8 @@ sync_conf() {
     else
         echo "Uploading for $name in $caname"
         gzip -c $caCert | ssh $ssh_opts "sudo bash -c 'gzip -d >$swanctl_dir/x509ca/$caname-cert.pem'"
-        gzip -c $partCert | ssh $ssh_opts "sudo bash -c 'gzip -d >$swanctl_dir/x509/$id-cert.pem'"
-        gzip -c $partKey | ssh $ssh_opts "sudo bash -c 'gzip -d >$swanctl_dir/rsa/$id-key.pem'"
+        gzip -c $partCert | ssh $ssh_opts "sudo bash -c 'gzip -d >$swanctl_dir/x509/$partCertName'"
+        gzip -c $partKey | ssh $ssh_opts "sudo bash -c 'gzip -d >$swanctl_dir/rsa/$partKeyName'"
         echo "Uploaded"
     fi
 }

@@ -38,9 +38,9 @@ gen_pem() {
     fi
 
     partDir=$caDir/$name
-    partKey=$partDir/$id-key.pem
-    partCert=$partDir/$id-cert.pem
-    partP12=$partDir/$id-cert.p12
+    partKey=$partDir/$caname-$id-key.pem
+    partCert=$partDir/$caname-$id-cert.pem
+    partP12=$partDir/$caname-$id-cert.p12
 
     if [ ! -e $partKey ]; then
         mkdir -p $partDir
