@@ -60,8 +60,8 @@ gen_pem() {
     fi
 }
 
-while read -r line; do
+while read -u 3 -r line; do
     read -r caname name id <<<$line
     assert_ca $dir $caname
     gen_pem
-done < <(grep -v '^\s*#' $parties_txt)
+done 3< <(grep -v '^\s*#' $parties_txt)
